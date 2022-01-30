@@ -18,8 +18,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include QMK_KEYBOARD_H
 
-#define ALT_ESC ALT_T(KC_ESC)
+#ifdef OLED_ENABLE
+#include "progmem.h"
+#include "animation.c"
+#endif // OLED_ENABLE
+
+#define ALT_BSPC ALT_T(KC_BSPC)
 #define GUI_ESC GUI_T(KC_ESC)
+#define LSFT_ENT LSFT_T(KC_ENT)
+#define LT1_BSPC LT(1, KC_BSPC)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // 0 - Base Linux
@@ -31,7 +38,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
         MO(2),    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  KC_ENT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LCTL, GUI_ESC,  KC_SPC,    KC_LSFT,  MO(1), ALT_ESC
+// TODO: Space + CTRL
+                                          KC_LCTL, GUI_ESC,  KC_SPC,   LSFT_ENT,LT1_BSPC, ALT_BSPC
                                       //`--------------------------'  `--------------------------'
   ),
   // 1 - Symbols
@@ -55,7 +63,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_TRNS, _______, _______, KC_VOLD, _______, _______,                      _______,    KC_1,    KC_2,    KC_3, KC_BSLS, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______, _______, _______,       KC_0,   MO(3), _______
+                                          _______, _______, KC_PSCR,       KC_0,   MO(3), _______
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -157,13 +165,11 @@ void render_bootmagic_status(bool status) {
     }
 }
 
-void oled_render_logo(void) {
-    static const char PROGMEM crkbd_logo[] = {
-        0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87, 0x88, 0x89, 0x8a, 0x8b, 0x8c, 0x8d, 0x8e, 0x8f, 0x90, 0x91, 0x92, 0x93, 0x94,
-        0xa0, 0xa1, 0xa2, 0xa3, 0xa4, 0xa5, 0xa6, 0xa7, 0xa8, 0xa9, 0xaa, 0xab, 0xac, 0xad, 0xae, 0xaf, 0xb0, 0xb1, 0xb2, 0xb3, 0xb4,
-        0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0xc5, 0xc6, 0xc7, 0xc8, 0xc9, 0xca, 0xcb, 0xcc, 0xcd, 0xce, 0xcf, 0xd0, 0xd1, 0xd2, 0xd3, 0xd4,
-        0};
-    oled_write_P(crkbd_logo, false);
+extern uint8_t is_master;
+static uint16_t oled_timer = 0;
+
+void render_animation(uint8_t frame) {
+    oled_write_raw_P(animation[frame], sizeof(animation[frame]));
 }
 
 bool oled_task_user(void) {
@@ -171,7 +177,7 @@ bool oled_task_user(void) {
         oled_render_layer_state();
         oled_render_keylog();
     } else {
-        oled_render_logo();
+        render_animation((timer_read() / 200) % 12);
     }
     return false;
 }
@@ -179,6 +185,7 @@ bool oled_task_user(void) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {
     set_keylog(keycode, record);
+    oled_timer = timer_read();
   }
   return true;
 }
