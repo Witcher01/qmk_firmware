@@ -112,6 +112,61 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 };
 
+#ifdef KEY_OVERRIDE_ENABLE
+// layers 5, 4 and 3 are layers for a german keyboard layout
+#define GERMAN_LAYERS_BITMAP (1 << 5) | (1 << 4) | (1 << 3)
+// override german keys to act like english layout when shift keys are pressed
+const key_override_t colon_key_override = {
+	.trigger = DE_SCLN,
+	.trigger_mods = MOD_MASK_SHIFT,
+	.replacement = DE_COLN,
+	.layers = GERMAN_LAYERS_BITMAP,
+	.options = ko_options_default,
+};
+const key_override_t comma_key_override = {
+	.trigger = DE_COMM,
+	.trigger_mods = MOD_MASK_SHIFT,
+	.replacement = DE_LABK,
+	.layers = GERMAN_LAYERS_BITMAP,
+	.options = ko_options_default,
+	.suppressed_mods = MOD_MASK_SHIFT,
+};
+const key_override_t period_key_override = {
+	.trigger = DE_DOT,
+	.trigger_mods = MOD_MASK_SHIFT,
+	.replacement = DE_RABK,
+	.layers = GERMAN_LAYERS_BITMAP,
+	.options = ko_options_default,
+};
+const key_override_t apostrophe_key_override = {
+	.trigger = DE_QUOT,
+	.trigger_mods = MOD_MASK_SHIFT,
+	.replacement = DE_DQUO,
+	.layers = GERMAN_LAYERS_BITMAP,
+	.options = ko_options_default,
+};
+const key_override_t slash_key_override = {
+	.trigger = DE_SLSH,
+	.trigger_mods = MOD_MASK_SHIFT,
+	.replacement = DE_QUES,
+	.layers = GERMAN_LAYERS_BITMAP,
+	.options = ko_options_default,
+};
+
+// universal overrides
+const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL);
+
+const key_override_t ** key_overrides = (const key_override_t *[]) {
+	&colon_key_override,
+	&comma_key_override,
+	&period_key_override,
+	&apostrophe_key_override,
+	&slash_key_override,
+	&delete_key_override,
+	NULL
+};
+#endif // KEY_OVERRIDE_ENABLE
+
 #ifdef OLED_ENABLE
 #    include <stdio.h>
 
