@@ -19,11 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include QMK_KEYBOARD_H
 #include "keymap_german.h"
 
-#define ALT_BSPC ALT_T(KC_BSPC)
 #define GUI_ESC GUI_T(KC_ESC)
-#define LSFT_ENT LSFT_T(KC_ENT)
-#define LT1_BSPC LT(1, KC_BSPC)
-#define LT4_BSPC LT(4, KC_BSPC)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // 0 - Base
@@ -35,7 +31,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
         MO(2),    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  KC_ENT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LCTL, GUI_ESC,  KC_SPC,   LSFT_ENT,LT1_BSPC, ALT_BSPC
+                                          KC_LCTL, GUI_ESC,  KC_SPC,    KC_LSFT,   MO(1), KC_LALT
                                       //`--------------------------'  `--------------------------'
   ),
   // 1 - Symbols
@@ -71,7 +67,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
         MO(5),    DE_Z,    DE_X,    DE_C,    DE_V,    DE_B,                         DE_N,    DE_M, DE_COMM,  DE_DOT, DE_SLSH,  KC_ENT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LCTL, GUI_ESC,  KC_SPC,   LSFT_ENT,LT4_BSPC, ALT_BSPC
+                                          KC_LCTL, GUI_ESC,  KC_SPC,    KC_LSFT,   MO(4), KC_LALT
                                       //`--------------------------'  `--------------------------'
   ),
   // 4 - Symbols (German)
