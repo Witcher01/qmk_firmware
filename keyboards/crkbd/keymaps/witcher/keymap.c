@@ -77,7 +77,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // 4 - Symbols (German)
   [4] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______, DE_BSLS, DE_SLSH, DE_LBRC, DE_RBRC, DE_TILD,                      DE_PIPE,  DE_EQL, DE_PLUS, DE_MINS, DE_UNDS, DE_UDIA,
+        DE_SS, DE_BSLS, DE_SLSH, DE_LBRC, DE_RBRC, DE_TILD,                      DE_PIPE,  DE_EQL, DE_PLUS, DE_MINS, DE_UNDS, DE_UDIA,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
         MO(6), DE_LCBR, DE_RCBR, DE_LPRN, DE_RPRN,  DE_GRV,                      KC_LEFT, KC_DOWN,   KC_UP,KC_RIGHT, DE_ODIA, DE_ADIA,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
