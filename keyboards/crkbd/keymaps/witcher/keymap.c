@@ -126,6 +126,7 @@ const key_override_t comma_key_override = {
 	.layers = GERMAN_LAYERS_BITMAP,
 	.options = ko_options_default,
 	.suppressed_mods = MOD_MASK_SHIFT,
+	.negative_mod_mask = (uint8_t) ~(MOD_BIT(KC_LGUI) | MOD_BIT(KC_RGUI)),
 };
 const key_override_t period_key_override = {
 	.trigger = DE_DOT,
@@ -133,6 +134,7 @@ const key_override_t period_key_override = {
 	.replacement = DE_RABK,
 	.layers = GERMAN_LAYERS_BITMAP,
 	.options = ko_options_default,
+	.negative_mod_mask = (uint8_t) ~(MOD_BIT(KC_LGUI) | MOD_BIT(KC_RGUI)),
 };
 const key_override_t apostrophe_key_override = {
 	.trigger = DE_QUOT,
