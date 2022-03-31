@@ -85,7 +85,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // 5 - MAN (German)
   [5] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______, _______, KC_BRID, KC_VOLU, KC_BRIU, _______,                      _______,    KC_7,    KC_8,    KC_9, DE_ASTR, _______,
+      _______, _______, KC_BRID, KC_VOLU, KC_BRIU, _______,                      DE_EURO,    KC_7,    KC_8,    KC_9, DE_ASTR, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_TRNS, KC_MUTE, KC_MPRV, KC_MPLY, KC_MNXT, _______,                      _______,    KC_4,    KC_5,    KC_6, DE_PLUS, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -148,6 +148,14 @@ const key_override_t slash_key_override = {
 	.layers = GERMAN_LAYERS_BITMAP,
 	.options = ko_options_default,
 };
+const key_override_t grave_key_override = {
+	.trigger = DE_GRV,
+	.trigger_mods = MOD_MASK_SHIFT,
+	.replacement = DE_ACUT,
+	.layers = GERMAN_LAYERS_BITMAP,
+	.options = ko_options_default,
+	.suppressed_mods = MOD_MASK_SHIFT,
+};
 
 // universal overrides
 const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL);
@@ -158,6 +166,7 @@ const key_override_t ** key_overrides = (const key_override_t *[]) {
 	&period_key_override,
 	&apostrophe_key_override,
 	&slash_key_override,
+	&grave_key_override,
 	&delete_key_override,
 	NULL
 };
